@@ -10,7 +10,6 @@ except ImportError:
     use_setuptools()
     from setuptools import setup, find_packages, Command
 
-from distutils.command.install_data import install_data
 from distutils.command.install import INSTALL_SCHEMES
 import sys
 

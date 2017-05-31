@@ -99,10 +99,10 @@ for dirpath, dirnames, filenames in os.walk(src_dir):
 if os.path.exists("README.rst"):
     long_description = codecs.open("README.rst", "r", "utf-8").read()
 else:
-    long_description = "See http://pypi.python.org/pypi/django-kombu"
+    long_description = "See http://pypi.python.org/pypi/django-kombu-reloaded"
 
 setup(
-    name='django-kombu',
+    name='django-kombu-reloaded',
     version=djkombu.__version__,
     description=djkombu.__doc__,
     author=djkombu.__author__,

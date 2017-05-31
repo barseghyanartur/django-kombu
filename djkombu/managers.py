@@ -1,10 +1,25 @@
-# Partially stolen from Django Queue Service
-# (http://code.google.com/p/django-queue-service)
+from __future__ import absolute_import
+
+from functools import wraps
+
 from django.db import transaction, connection, models
 try:
     from django.db import connections, router
 except ImportError:  # pre-Django 1.2
-    connections = router = None
+    connections = router = None  # noqa
+
+
+try:
+    transaction.atomic
+except AttributeError:
+    commit_on_success = transaction.commit_on_success
+else:
+    def commit_on_success(fun):
+        @wraps(fun)
+        def _commit(*args, **kwargs):
+            with transaction.atomic():
+                return fun(*args, **kwargs)
+        return _commit
 
 
 class QueueManager(models.Manager):
@@ -36,13 +51,25 @@ class QueueManager(models.Manager):
         return count
 
 
+def select_for_update(qs):
+    if connection.vendor == 'oracle':
+        return qs
+    try:
+        return qs.select_for_update()
+    except AttributeError:
+        return qs
+
+
 class MessageManager(models.Manager):
     _messages_received = [0]
     cleanup_every = 10
 
+    @commit_on_success
     def pop(self):
         try:
-            resultset = self.filter(visible=True).order_by('sent_at', 'id')
+            resultset = select_for_update(
+                self.filter(visible=True).order_by('sent_at', 'id')
+            )
             result = resultset[0:1].get()
             result.visible = False
             result.save()
@@ -56,13 +83,11 @@ class MessageManager(models.Manager):
 
     def cleanup(self):
         cursor = self.connection_for_write().cursor()
-        try:
-            cursor.execute("DELETE FROM %s WHERE visible=%%s" % (
-                            self.model._meta.db_table, ), (False, ))
-        except:
-            transaction.rollback_unless_managed()
-        else:
-            transaction.commit_unless_managed()
+        cursor.execute(
+            'DELETE FROM %s WHERE visible=%%s' % (
+                self.model._meta.db_table, ),
+            (False, )
+        )
 
     def connection_for_write(self):
         if connections:

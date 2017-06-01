@@ -4,7 +4,6 @@ django-kombu
 Kombu transport using the Django database. Enables you to use the Django
 database as the message store for `Kombu`_.
 
-This package
 :version: 2.0.0
 
 Installation

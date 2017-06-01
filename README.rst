@@ -10,7 +10,7 @@ This package
 Installation
 ============
 
-(1) Install ``django-kombu``
+(1) Install ``django-kombu``:
 
     .. code-block:: sh
 

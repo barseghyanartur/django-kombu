@@ -23,8 +23,8 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'djkombu_message',
-                'verbose_name': 'message',
-                'verbose_name_plural': 'messages',
+                'verbose_name': 'Message',
+                'verbose_name_plural': 'Messages',
             },
         ),
         migrations.CreateModel(
@@ -38,14 +38,14 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'djkombu_queue',
-                'verbose_name': 'queue',
-                'verbose_name_plural': 'queues',
+                'verbose_name': 'Queue',
+                'verbose_name_plural': 'Queues',
             },
         ),
         migrations.AddField(
             model_name='message',
             name='queue',
             field=models.ForeignKey(
-                related_name='messages', to='kombu_transport_django.Queue'),
+                related_name='messages', to='djkombu.Queue'),
         ),
     ]

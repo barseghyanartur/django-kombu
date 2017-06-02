@@ -21,7 +21,9 @@ if root_dir != '':
     os.chdir(root_dir)
 src_dir = "djkombu"
 
-install_requires = []
+install_requires = [
+    'six',
+]
 
 
 def osx_install_data(install_data):
@@ -44,7 +46,7 @@ class RunTests(Command):
 
     def run(self):
         this_dir = os.getcwd()
-        testproj_dir = os.path.join(this_dir, "testproj")
+        testproj_dir = os.path.join(this_dir, "tests", "testproj")
         os.chdir(testproj_dir)
         sys.path.insert(0, testproj_dir)
         from django.core.management import execute_manager

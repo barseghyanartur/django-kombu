@@ -3,7 +3,7 @@ from nose import SkipTest
 from .base import TransportCase, redirect_stdouts
 
 
-class TestDjango(transport.TransportCase):
+class TestDjango(TransportCase):
     """Djagno test case."""
 
     transport = 'django'

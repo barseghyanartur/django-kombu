@@ -10,6 +10,8 @@ import unittest
 import warnings
 import weakref
 
+from functools import wraps
+
 import six
 
 from nose import SkipTest
@@ -25,6 +27,9 @@ else:
 
 if six.PY3:
     buffer = memoryview
+    string_letters = string.ascii_letters
+else:
+    string_letters = string.letters
 
 
 def skip_if_environ(env_var_name):
@@ -211,7 +216,7 @@ class TransportCase(unittest.TestCase):
     @skip_if_quick
     def test_produce__consume_large_messages(
             self, bytes=1048576, n=10,
-            charset=string.punctuation + string.letters + string.digits):
+            charset=string.punctuation + string_letters + string.digits):
         if not self.verify_alive():
             return
         bytes = min(x for x in [bytes, self.message_size_limit] if x)

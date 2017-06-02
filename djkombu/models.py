@@ -3,9 +3,12 @@ from __future__ import absolute_import
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
+from six import python_2_unicode_compatible
+
 from .managers import QueueManager, MessageManager
 
 
+@python_2_unicode_compatible
 class Queue(models.Model):
     """Queue model."""
 
@@ -20,7 +23,11 @@ class Queue(models.Model):
         verbose_name = _('Queue')
         verbose_name_plural = _('Queues')
 
+    def __str__(self):
+        return self.name
 
+
+@python_2_unicode_compatible
 class Message(models.Model):
     """Message model."""
 
@@ -38,3 +45,7 @@ class Message(models.Model):
         db_table = 'djkombu_message'
         verbose_name = _('Message')
         verbose_name_plural = _('Messages')
+
+    def __str__(self):
+        return self.payload
+

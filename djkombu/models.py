@@ -9,7 +9,7 @@ from .managers import QueueManager, MessageManager
 class Queue(models.Model):
     """Queue model."""
 
-    name = models.CharField(_('name'), max_length=200, unique=True)
+    name = models.CharField(_('Name'), max_length=200, unique=True)
 
     objects = QueueManager()
 

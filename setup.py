@@ -49,14 +49,11 @@ class RunTests(Command):
         testproj_dir = os.path.join(this_dir, "tests", "testproj")
         os.chdir(testproj_dir)
         sys.path.insert(0, testproj_dir)
-        from django.core.management import execute_manager
+        from django.core.management import call_command
         os.environ["DJANGO_SETTINGS_MODULE"] = os.environ.get(
-            "DJANGO_SETTINGS_MODULE", "settings"
+            "DJANGO_SETTINGS_MODULE", "testproj.settings"
         )
-        settings_file = os.environ["DJANGO_SETTINGS_MODULE"]
-        settings_mod = __import__(settings_file, {}, {}, [''])
-        execute_manager(settings_mod, argv=[
-            __file__, "test"])
+        call_command('test', 'djkombu')
         os.chdir(this_dir)
 
 

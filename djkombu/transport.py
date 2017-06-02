@@ -16,7 +16,7 @@ VERSION = (2, 0, 0)
 
 __author__ = "Ask Solem"
 __contact__ = "ask@celeryproject.org"
-__homepage__ = "http://github.com/barseghyanartur/django-kombu-reloaded/"
+__homepage__ = "http://github.com/celery/django-kombu/"
 __docformat__ = "restructuredtext"
 __license__ = "BSD"
 __version__ = '.'.join(map(str, VERSION))

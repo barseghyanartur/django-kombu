@@ -18,3 +18,4 @@ bundle_version.gen
 celeryd.log
 celeryd.pid
 .idea/
+db.sqlite3

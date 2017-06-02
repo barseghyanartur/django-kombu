@@ -10,6 +10,7 @@ import unittest
 import warnings
 import weakref
 
+from django.test import TransactionTestCase
 from functools import wraps
 
 import six
@@ -106,7 +107,7 @@ def consumeN(conn, consumer, n=1, timeout=30):
     return messages
 
 
-class TransportCase(unittest.TestCase):
+class TransportCase(TransactionTestCase):
     transport = None
     prefix = None
     sep = '.'
@@ -357,3 +358,7 @@ class TransportCase(unittest.TestCase):
     def tearDown(self):
         if self.transport and self.connected:
             self.connection.close()
+
+
+if __name__ == '__main__':
+    unittest.main()

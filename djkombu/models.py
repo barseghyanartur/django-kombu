@@ -19,6 +19,7 @@ class Queue(models.Model):
     class Meta(object):
         """Meta options."""
 
+        app_label = 'djkombu'
         db_table = 'djkombu_queue'
         verbose_name = _('Queue')
         verbose_name_plural = _('Queues')
@@ -42,10 +43,10 @@ class Message(models.Model):
     class Meta(object):
         """Meta options."""
 
+        app_label = 'djkombu'
         db_table = 'djkombu_message'
         verbose_name = _('Message')
         verbose_name_plural = _('Messages')
 
     def __str__(self):
         return self.payload
-

@@ -130,6 +130,7 @@ class TransportCase(TransactionTestCase):
         pass
 
     def setUp(self):
+        super(TransportCase, self).setUp()
         if self.transport:
             try:
                 self.before_connect()

@@ -2,6 +2,8 @@ from __future__ import absolute_import
 
 from django.core.management.base import BaseCommand
 
+from ...models import Message
+
 
 def pluralize(desc, value):
     if value > 1:
@@ -13,8 +15,6 @@ class Command(BaseCommand):
     requires_model_validation = True
 
     def handle(self, *args, **options):
-        from kombu.transport.django.models import Message
-
         count = Message.objects.filter(visible=False).count()
 
         print('Removing {0} invisible {1} from database... '.format(

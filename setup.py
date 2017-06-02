@@ -49,7 +49,8 @@ class RunTests(Command):
         sys.path.insert(0, testproj_dir)
         from django.core.management import execute_manager
         os.environ["DJANGO_SETTINGS_MODULE"] = os.environ.get(
-                        "DJANGO_SETTINGS_MODULE", "settings")
+            "DJANGO_SETTINGS_MODULE", "settings"
+        )
         settings_file = os.environ["DJANGO_SETTINGS_MODULE"]
         settings_mod = __import__(settings_file, {}, {}, [''])
         execute_manager(settings_mod, argv=[
@@ -92,13 +93,15 @@ for dirpath, dirnames, filenames in os.walk(src_dir):
         elif is_unwanted_file(filename):
             pass
         else:
-            data_files.append([dirpath, [os.path.join(dirpath, f) for f in
-                filenames]])
+            data_files.append(
+                [dirpath, [os.path.join(dirpath, f) for f in filenames]]
+            )
 
 if os.path.exists("README.rst"):
     long_description = codecs.open("README.rst", "r", "utf-8").read()
 else:
     long_description = "See http://pypi.python.org/pypi/django-kombu"
+
 
 setup(
     name='django-kombu',
